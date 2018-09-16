@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta http-equiv="X-UA-Conpatible" content="IE=edge" />
+        <h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+        <title>adres</title>
+    </h:head>
+    <h:body>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <ui:composition template="/tasarim/adminTasarim.xhtml">
+            <ui:define name="title"></ui:define>
+            <ui:define name="content">
+                <div class="row">
+                    <div class="col-md-6" id="bos ">
+                        <h:form id="calisan-tablo">
+                            <h:commandButton action="/calisan/ekle?faces-redirect=true" value="kayıt ekle" class="btn btn-danger" >
+                                <f:ajax render="veysyag" execute="@this" />
+                            </h:commandButton>
+                            <h:dataTable class="table table-striped"  var="der" value="#{calisan.listele()}">
+                                <h:column >
+                                    <f:facet name="header">Çalışan Id</f:facet>
+                                    <h:outputText value="#{der.calisanId}" />
+                                </h:column>
+                                <h:column >
+                                    <f:facet name="header">Ekip</f:facet>
+                                    <h:outputText value="#{der.ekip.ekipAdi}" />
+                                </h:column>
+                                <h:column >
+                                    <f:facet name="header">Ad Soyad</f:facet>
+                                    <h:outputText value="#{der.vatandas.ad} #{der.vatandas.soyad}" />
+
+                                </h:column>
+                                <h:column >
+                                    <f:facet name="header">Meslek</f:facet>
+                                    <h:outputText value="#{der.meslek.meslekAdi} " />
+
+                                </h:column>
+                                <h:column >
+                                    <f:facet name="header">resim</f:facet>
+                                    <img src="#{der.resim.uzanti}" alt="#{der.resim.uzanti}" height="50" width="50" class="rounded-circle"/>
+
+                                </h:column>
+                                <h:column>
+                                    <h:commandButton class="btn btn-outline-warning" action="#{calisan.guncelle(der)}" value="Güncelle">
+                                        <f:ajax execute="@this" render="calisan-guncelle" />
+                                    </h:commandButton>
+                                    <r></r> 
+                                    <h:commandButton onclick="$('.modal').modal('show')" class="btn btn-outline-danger" action="#{calisan.sil(der)}" value="Sil">
+                                        <f:ajax execute="@this" render="calisan-tablo" />
+                                    </h:commandButton>
+                                </h:column>
+
+
+                            </h:dataTable>
+                            <ul>
+                                <ui:repeat value="#{calisan.listele()}" var="item">
+                                    <div class="col-md-6">
+                                        <div class="card"  style="width: 18rem;">
+                                            <img width="200" height="200" class="card-img-top" src="#{item.resim.uzanti}" alt="Card image cap"/>
+                                            <div class="card-body">
+                                                <p class="card-text">
+                                                    ad : #{item.vatandas.ad}
+                                                    <br></br>
+                                                    soyad : #{item.vatandas.soyad}
+                                                    <br></br>
+                                                    meslek: #{item.meslek.meslekAdi}
+                                                    <br></br>
+                                                    ekip:#{item.ekip.ekipAdi}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ui:repeat>
+                            </ul>
+                        </h:form>
+                    </div>
+                    <div class="col-md-4">
+                        <h:form id="calisan-guncelle"> 
+                            <br></br><br></br>
+                            <h4>Güncelleme Ekranı </h4>
+                            <h:outputText value="Tc No   : " />  
+                            <h:inputText class="form-control mr-sm-2" value="#{calisan.calisan2.vatandas.tcNo}" />
+                            <br></br>
+                            <h:outputText value="Ekip : " />    
+
+                            <h:selectOneMenu styleClass="custom-select" id="selectekip" value="#{calisan.calisan2.ekip}" converter="ekipConverter">
+                                <f:selectItems value="#{calisan.ekiplistele()}" var="ilcem" itemValue="#{ilcem}" itemLabel="#{ilcem.ekipAdi}"  />
+                            </h:selectOneMenu>
+                            <br></br>
+                            <h:outputText value="meslek : " />    
+
+                            <h:selectOneMenu styleClass="custom-select" id="selectmeslek" value="#{calisan.calisan2.meslek}" converter="meslekConverter">
+                                <f:selectItems value="#{calisan.mesleklistele()}" var="ilcem" itemValue="#{ilcem}" itemLabel="#{ilcem.meslekAdi}"  />
+                            </h:selectOneMenu>
+
+                            <r></r>
+                            <h:commandButton action="#{calisan.guncelleKaydet()}" value="kaydet" class="btn btn-success" />
+                        </h:form>
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition> 
+    </h:body>
+</html>
+

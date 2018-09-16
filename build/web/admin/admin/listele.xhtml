@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta http-equiv="X-UA-Conpatible" content="IE=edge" />
+        <h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+        <title>adres</title>
+    </h:head>
+    <h:body>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+   <ui:composition template="/tasarim/aatasarim.xhtml">
+            <ui:define name="title"></ui:define>
+            <ui:define name="content"> 
+        <div class="row">
+            <div class="col-md-6" id="bos ">
+                <h:form>
+                 
+                    <h:dataTable class="table table-striped"  var="der" value="#{admin.listele()}">
+                        <h:column >
+                            <f:facet name="header">kullanıcı ad</f:facet>
+                            <h:outputText value="#{der.kullaniciAdi}" />
+                        </h:column>
+                        <h:column >
+                            <f:facet name="header">şifre</f:facet>
+                            <h:outputText value="#{der.sifre}" />
+                        </h:column>
+                         <h:column >
+                            <f:facet name="header">admin yetkisi</f:facet>
+                            <h:outputText value="#{der.adminYetki.ad}" />
+                        </h:column>
+                        
+                         <h:column>
+                             <h:commandButton rendered="#{adminLoginController.admin2.adminYetki.guncelleme==true}" class="btn btn-outline-warning" action="#{admin.guncelle(der)}" value="Güncelle"></h:commandButton>
+                            <r></r> 
+                            <h:commandButton rendered="#{adminLoginController.admin2.adminYetki.silme==true}" class="btn btn-outline-danger" action="#{admin.sil(der)}" value="Sil"></h:commandButton>
+                                   <r></r> 
+                            <h:commandButton class="btn btn-outline-warning" action="#{arac.detay(der)}" value="Detay"></h:commandButton>
+                        </h:column>
+
+
+                    </h:dataTable>
+
+                </h:form>
+            </div>
+            <div class="col-md-4">
+                <h:form> 
+                    <br></br><br></br>
+                       <h:outputText value="kullanici adi : " />    
+                       <h:inputText value="#{admin.admin.kullaniciAdi}" />
+                <br></br><br></br>
+                  <h:outputText value="şifre : " />    
+                  <h:inputText value="#{admin.admin.sifre}" />
+                
+                <br></br>  <br></br>  <br></br>
+               <h:outputText value="yetki   : " />    
+               <h:selectOneMenu styleClass="custom-select" id="selectmahalle" value="#{admin.admin.adminYetki}" converter="adminyetkiconverter">
+                   <f:selectItems value="#{adminYetki.listele()}" var="yetkim" itemValue="#{yetkim}" itemLabel="#{yetkim.ad}"  />
+                   </h:selectOneMenu>
+             
+              <br></br>  <br></br>  <br></br>
+              
+             
+              <h:commandButton rendered="#{(admin.admin.adminYetki.ad==null); (adminLoginController.admin2.adminYetki.ekleme==true)}" action="#{admin.ekle()}" value="kaydet" class="btn btn-success" />
+               <r></r><r></r>
+               <h:commandButton rendered="#{admin.admin.adminYetki.ad!=null}" action="#{admin.guncelleKaydet()}" value="güncelle" class="btn btn-success" />
+                <r></r><r></r>
+                <h:commandButton  action="#{admin.temzile()}" value="temizle" class="btn btn-success" />
+                </h:form>
+            </div>
+        </div>
+            </ui:define>
+   </ui:composition>
+        
+    </h:body>
+</html>
+

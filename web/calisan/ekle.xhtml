@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+  <h:head>
+<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta http-equiv="X-UA-Conpatible" content="IE=edge" />
+	<h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+	<title>Demo Web</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="/tasarim/adminTasarim.xhtml">
+            <ui:define name="title"></ui:define>
+            <ui:define name="content">
+        <h:form enctype="multipart/form-data">
+             <h:outputText value="Tc No   : " />  
+                    <h:inputText class="form-control mr-sm-2" value="#{calisan.calisan.vatandas.tcNo}" />
+                    <br></br>
+                    <h:outputText value="Ekip : " />    
+
+                    <h:selectOneMenu styleClass="custom-select" id="selectekip" value="#{calisan.calisan.ekip}" converter="ekipConverter">
+                        <f:selectItems value="#{calisan.ekiplistele()}" var="ilcem" itemValue="#{ilcem}" itemLabel="#{ilcem.ekipAdi}"  />
+                    </h:selectOneMenu>
+                    <br></br>
+                    <h:outputText value="meslek : " />    
+
+                    <h:selectOneMenu styleClass="custom-select" id="selectmeslek" value="#{calisan.calisan.meslek}" converter="meslekConverter">
+                        <f:selectItems value="#{calisan.mesleklistele()}" var="ilcem" itemValue="#{ilcem}" itemLabel="#{ilcem.meslekAdi}"  />
+                    </h:selectOneMenu>
+                  
+                     <h:outputText value="Resim  : " />  
+                      <h:inputFile value="#{calisan.calisan.resim.dosya}"/>
+                 
+                    <br></br><br></br>
+                  <h:commandButton action="#{calisan.create()}" value="kaydet" class="btn btn-danger" />
+                     
+           
+            
+        </h:form>
+        </ui:define>
+        </ui:composition> 
+    </h:body>
+</html>
+

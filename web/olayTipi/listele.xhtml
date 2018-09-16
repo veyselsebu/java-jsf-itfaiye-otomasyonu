@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta http-equiv="X-UA-Conpatible" content="IE=edge" />
+        <h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+        <title>adres</title>
+    </h:head>
+    <h:body>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <ui:composition template="/tasarim/adminTasarim.xhtml">
+            <ui:define name="title"></ui:define>
+            <ui:define name="content">  
+        <div class="row">
+            <div class="col-md-6" id="bos ">
+                
+                <h:form id="olaytipi-tablo">
+                    <h:commandButton action="/olayTipi/ekle?faces-redirect=true" value="kayıt ekle" class="btn btn-danger" >
+
+                        <f:ajax render="veysyag" execute="@this" />
+                    </h:commandButton>
+                    <h:dataTable class="table table-striped"  var="der" value="#{olayTipi.listele()}">
+                        <h:column >
+                            <f:facet name="header">olayTipi Id</f:facet>
+                            <h:outputText value="#{der.olayTipiId}" />
+                        </h:column>
+                        <h:column >
+                            <f:facet name="header">Ad</f:facet>
+                            <h:outputText value="#{der.olayTipiAdi}" >
+                            <f:convertDateTime pattern="dd-MM-yyyy" />
+                            </h:outputText>
+                        </h:column>
+                        
+                         <h:column>
+                            <h:commandButton class="btn btn-outline-warning" action="#{olayTipi.guncelle(der)}" value="Güncelle">
+                                <f:ajax execute="@this" render="olaytipi-guncelle" />
+                            </h:commandButton>
+                            <r></r> 
+                            <h:commandButton class="btn btn-outline-danger" action="#{olayTipi.sil(der)}" value="Sil">
+                                <f:ajax execute="@this" render="olaytipi-tablo" />
+                            </h:commandButton>
+                                   <r></r> 
+                            <h:commandButton class="btn btn-outline-dark" action="#{olayTipi.detay(der)}" value="Detay"></h:commandButton>
+                        </h:column>
+
+
+                    </h:dataTable>
+
+                </h:form>
+            </div>
+            <div class="col-md-4">
+                <h:form id="olaytipi-guncelle"> 
+                    <br></br><br></br>
+                    <h4>Güncelleme Ekranı </h4>
+               <h:outputText value="olay tipi adı__: " />    
+               <h:inputText value="#{olayTipi.olayTipi2.olayTipiAdi}" />
+                
+               <br></br>  <br></br>  <br></br>
+               <h:outputText value="Açıklama_______: " />    
+               <h:inputText value="#{olayTipi.olayTipi2.aciklama}" />
+             
+           
+               <br></br>
+               
+             
+                    <h:commandButton action="#{olayTipi.guncelleKaydet()}" value="kaydet" class="btn btn-success" />
+                </h:form>
+            </div>
+        </div>
+         </ui:define>
+        </ui:composition> 
+    </h:body>
+</html>
+

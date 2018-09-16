@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+  <h:head>
+<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta http-equiv="X-UA-Conpatible" content="IE=edge" />
+	<h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+	<title>Demo Web</title>
+    </h:head>
+    <h:body>
+           <ui:composition template="/tasarim/b-daireTasarim.xhtml">
+            <ui:define name="title"></ui:define>
+            <ui:define name="content">
+        <h:form>
+      
+              <h:outputText value="olay Id   : " />    
+              <h:outputText value="#{olay.olay2.olayId}" />
+            <br></br>  <br></br>  <br></br>
+               <h:outputText value="olay tipi           : " />    
+               <h:outputText value="#{olay.olay2.olayTipi.olayTipiAdi}" />
+                          <br></br>  <br></br>  <br></br>
+                   <h:outputText value="olü sayısı   : " />    
+                   <h:outputText value="#{olay.olay2.oluSayisi}" />
+              <br></br>  <br></br>  <br></br>
+               <h:outputText value="yaralı sayısı    : " />    
+               <h:outputText value="#{olay.olay2.yaraliSayisi}" />
+                <br></br>  <br></br>  <br></br>
+               <h:outputText value="tarih    : " />    
+               <h:outputText value="#{olay.olay2.olayTarihi}" />
+              <br></br>  <br></br>  <br></br>
+               <h:outputText value="ihbarı veren    : " />    
+               <h:outputText value="#{olay.olay2.ihbar.vatandas.ad} #{olay.olay2.ihbar.vatandas.soyad}" />
+               <br></br>  <br></br>  <br></br>
+               <h:outputText value="ihbarı alan    : " />    
+               <h:outputText value="#{olay.olay2.ihbar.calisan.vatandas.ad} #{olay.olay2.ihbar.calisan.vatandas.soyad}" />
+                       <br></br>  <br></br>  <br></br>
+                   <h:outputText value="ilce    : " />    
+                   <h:outputText value="#{olay.olay2.adres.cadde.mahalle.ilce.ilceAdi}" />
+              <br></br>  <br></br>  <br></br>
+               <h:outputText value="mahalle    : " />    
+               <h:outputText value="#{olay.olay2.adres.cadde.mahalle.mahalleAdi}" />
+               <br></br>  <br></br>  <br></br>
+               <h:outputText value="cadde    : " />    
+               <h:outputText value="#{olay.olay2.adres.cadde.caddeAdi}" />
+                       <br></br>  <br></br>  <br></br>            
+            <h:outputText value="açık adres    : " />    
+            <h:outputText value="#{olay.olay2.adres.acikAdres}" />
+           
+            
+        </h:form>
+                     </ui:define>
+        </ui:composition>  
+    </h:body>
+</html>
+

@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta http-equiv="X-UA-Conpatible" content="IE=edge" />
+        <h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+        <title>Demo Web</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="/tasarim/b-daireTasarim.xhtml">
+            <ui:define name="title"></ui:define>
+            <ui:define name="content"> 
+                <h:form>
+
+                    <h:outputText value="cadde : " />
+                    <br></br>
+                    <h:selectOneMenu styleClass="custom-select" id="selectcadde" value="#{olay.olay.adres.cadde}" converter="caddeConverter">
+                        <f:selectItems value="#{cadde.listele()}" var="caddem" itemValue="#{caddem}" itemLabel="#{caddem.caddeAdi}"  />
+                    </h:selectOneMenu>
+                    <br></br> 
+                    <h:outputText value="açık adres : " />    
+                    <br></br>
+                    <h:inputText value="#{olay.olay.adres.acikAdres}" />
+
+                    <br></br>  
+                    <h:outputText value="ihbar yapan tc    : " />    
+                    <br></br>
+                    <h:inputText value="#{olay.olay.ihbar.vatandas.tcNo}" />
+                    <br></br> 
+                    <h:outputText value="olay Tarihi    : " />    
+                    <br></br>
+                    <h:inputText value="#{olay.olay.olayTarihi}" >
+                        <f:convertDateTime pattern="dd-MM-yyyy" />
+                    </h:inputText>
+                    <br></br>  
+                    <h:outputText value="olay tipi    : " />    
+                    <br></br>
+                    <h:selectOneMenu styleClass="custom-select" id="selectolayTipi" value="#{olay.olay.olayTipi}" converter="olaytipiConverter">
+                        <f:selectItems value="#{olayTipi.listele()}" var="ilcem" itemValue="#{ilcem}" itemLabel="#{ilcem.olayTipiAdi}"  />
+                    </h:selectOneMenu>
+                    <br></br> 
+                    <h:outputText value="ölü sayısı    : " />    
+                    <br></br>
+                    <h:inputText value="#{olay.olay.oluSayisi}" />
+                    <br></br> 
+                    <h:outputText value="yaralı sayısı    : " />    
+                    <br></br>
+                    <h:inputText value="#{olay.olay.yaraliSayisi}" />
+
+                    <br></br>  
+                    <h:commandButton action="#{olay.ekle(loginController.kullanici2.calisan)}" value="kaydet" class="btn btn-danger" />
+
+
+
+                </h:form>
+            </ui:define>
+        </ui:composition>  
+    </h:body>
+</html>
+

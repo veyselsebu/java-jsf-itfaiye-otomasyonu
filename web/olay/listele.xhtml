@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta http-equiv="X-UA-Conpatible" content="IE=edge" />
+        <h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+        <title>adres</title>
+    </h:head>
+    <h:body>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <ui:composition template="/tasarim/b-daireTasarim.xhtml">
+            <ui:define name="title"></ui:define>
+            <ui:define name="content"> 
+                <div class="row">
+                    <div class="col-md-6" id="bos ">
+                        <h:form id="olay-tablo">
+                            <h:commandButton action="/olay/ekle?faces-redirect=true" value="kayıt ekle" class="btn btn-danger" >
+
+                                <f:ajax render="veysyag" execute="@this" />
+                            </h:commandButton>
+                            <h:dataTable class="table table-striped"  var="der" value="#{olay.listele()}">
+                                <h:column >
+                                    <f:facet name="header">olay Id</f:facet>
+                                    <h:outputText value="#{der.olayId}" />
+                                </h:column>
+                                <h:column >
+                                    <f:facet name="header">tarih</f:facet>
+                                    <h:outputText value="#{der.olayTarihi}" >
+                                        <f:convertDateTime pattern="dd-MM-yyyy" />
+                                    </h:outputText>
+                                </h:column>
+                                <h:column >
+                                    <f:facet name="header">olay tipi</f:facet>
+                                    <h:outputText value="#{der.olayTipi.olayTipiAdi}" />
+                                </h:column>
+                                <h:column >
+                                    <f:facet name="header">vatandaş</f:facet>
+                                    <h:outputText value="#{der.ihbar.vatandas.ad} #{der.ihbar.vatandas.soyad}" />
+                                </h:column>
+                                <h:column>
+                                    <h:commandButton class="btn btn-outline-warning" action="#{olay.guncelle(der)}" value="Güncelle">
+                                        <f:ajax execute="@this" render="olay-guncelle"/>
+                                    </h:commandButton>
+                                    <r></r> 
+                                    <h:commandButton class="btn btn-outline-danger" action="#{olay.sil(der)}" value="Sil">
+                                        <f:ajax execute="@this" render="olay-tablo"/>
+                                    </h:commandButton>
+                                    <r></r> 
+                                    <h:commandButton class="btn btn-outline-dark" action="#{olay.detay(der)}" value="Detay"></h:commandButton>
+                                </h:column>
+
+
+                            </h:dataTable>
+
+                        </h:form>
+                    </div>
+                    <div class="col-md-4">
+                        <h:form id="olay-guncelle"> 
+                            <br></br><br></br>
+                            <h4>Güncelleme Ekranı </h4>
+                            <h:outputText value="adres Id  : " />    
+                            <h:inputText value="#{olay.olay2.adres.adresId}" />
+
+                            <br></br>  <br></br>  <br></br>
+                            <h:outputText value="ihbar Id    : " />    
+                            <h:inputText value="#{olay.olay2.ihbar.ihbarId}" />
+                            <br></br>  <br></br>  <br></br>
+                            <h:outputText value="olay Tarihi    : " />    
+                            <h:inputText value="#{olay.olay2.olayTarihi}" >
+                                <f:convertDateTime pattern="dd-MM-yyyy" />
+                            </h:inputText>
+                            <br></br>  <br></br>  <br></br>
+                            <h:selectOneMenu styleClass="custom-select" id="selectolayTipi" value="#{olay.olay2.olayTipi}" converter="olaytipiConverter">
+                                <f:selectItems value="#{olayTipi.listele()}" var="ilcem" itemValue="#{ilcem}" itemLabel="#{ilcem.olayTipiAdi}"  />
+                            </h:selectOneMenu>
+                            <br></br>  <br></br>  <br></br>
+                            <h:outputText value="ölü sayısı    : " />    
+                            <h:inputText value="#{olay.olay2.oluSayisi}" />
+                            <br></br>  <br></br>  <br></br>
+                            <h:outputText value="yaralı sayısı    : " />    
+                            <h:inputText value="#{olay.olay2.yaraliSayisi}" />
+                            <br></br>
+
+
+                            <h:commandButton action="#{olay.guncelleKaydet()}" value="kaydet" class="btn btn-success" />
+                        </h:form>
+                    </div>
+                </div>
+
+            </ui:define>
+        </ui:composition>  
+    </h:body>
+</html>
+
